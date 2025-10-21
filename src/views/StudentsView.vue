@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import StudentService from '../services/StudentService'
+import StudentCard from '../components/StudentCard.vue'
 
 type Student = {
   id: number
@@ -33,25 +34,17 @@ onMounted(() => {
     <div v-if="loading">Loading students...</div>
     <div v-else-if="error">Failed to load students: {{ error }}</div>
     <div v-else class="students-grid">
-      <div v-for="s in students" :key="s.id" class="student-card">
-        <h3>{{ s.name }} {{ s.surname }}</h3>
-        <p>GPA: {{ s.gpa }}</p>
-      </div>
+      <StudentCard v-for="s in students" :key="s.id" :student="s" />
     </div>
   </div>
 </template>
 
 <style scoped>
 .students-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
   padding: 1rem;
-}
-.student-card {
-  border: 1px solid #ddd;
-  padding: 1rem;
-  border-radius: 6px;
-  background: #fff;
+  justify-content: center;
 }
 </style>

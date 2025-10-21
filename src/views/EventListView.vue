@@ -10,21 +10,34 @@ const API_URL = import.meta.env.VITE_API_URL || 'https://my-json-server.typicode
 const events = ref<Event[]>([])
 const loading = ref(true)
 const error = ref<string | null>(null)
+const offlineNote = ref<string | null>(null)
 
 async function loadEvents() {
   loading.value = true
   error.value = null
   try {
+    // try remote first
     const res = await fetch(API_URL)
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
     const data = await res.json()
     // expecting an array at /events
     events.value = Array.isArray(data) ? data : []
   } catch (err: any) {
+    // remote failed; we'll fallback to public/db.json and localStorage
     error.value = err?.message || String(err)
+    try {
+      const localRes = await fetch('/db.json')
+      const localData = await localRes.json()
+      events.value = Array.isArray(localData.events) ? localData.events : []
+      offlineNote.value = 'Using local data; newly added events are saved in your browser.'
+    } catch (e) {
+      events.value = []
+    }
   } finally {
     loading.value = false
   }
+  // always merge any locally saved events
+  mergeLocalStorage()
 }
 
 onMounted(() => {
@@ -59,8 +72,24 @@ async function addEvent() {
     // clear form
     newEvent.value = { title: '', category: '', date: '', time: '', organizer: '', location: '', description: '', petsAllowed: false }
   } catch (err: any) {
-    // if POST fails (for example my-json-server is read-only), show alert with guidance
-    alert('Unable to add event to the remote API: ' + (err?.message || String(err)) + '\n\nIf you are using my-json-server.typicode.com, it is read-only. To persist data use json-server locally or edit db.json in your GitHub repo and re-create the mock server.')
+    // if POST fails (for example my-json-server is read-only), persist to localStorage and show message
+    const stored = JSON.parse(localStorage.getItem('localEvents') || '[]') as Event[]
+    stored.push(payload as Event)
+    localStorage.setItem('localEvents', JSON.stringify(stored))
+    // update displayed list immediately
+    events.value = [payload as Event, ...events.value]
+    offlineNote.value = 'Remote POST failed; event saved locally in your browser.'
+    // also show guidance
+    alert('Remote POST failed: event saved locally. If you want persistence across devices, edit db.json in your GitHub repo and re-create the mock server (my-json-server is read-only).')
+  }
+}
+
+// merge localStorage events (persisted via our addEvent fallback)
+function mergeLocalStorage() {
+  const stored = JSON.parse(localStorage.getItem('localEvents') || '[]') as Event[]
+  if (stored.length) {
+    // prepend stored events so they are visible immediately
+    events.value = [...stored, ...events.value]
   }
 }
 </script>

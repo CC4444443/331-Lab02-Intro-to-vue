@@ -3,7 +3,7 @@ import EventCard from '../components/EventCard.vue'
 import EventMeta from '../components/EventMeta.vue'
 import type { Event } from '../types'
 import { ref, onMounted } from 'vue'
-import axios from 'axios'
+import EventService from '../services/EventService'
 
 // API endpoint: set VITE_API_URL in .env to point to your my-json-server URL
 const API_URL = import.meta.env.VITE_API_URL || 'https://my-json-server.typicode.com/CC4444443/331-Lab02-Intro-to-vue/events'
@@ -17,7 +17,7 @@ async function loadEvents() {
   loading.value = true
   error.value = null
   try {
-    const res = await axios.get(API_URL)
+    const res = await EventService.getEvents()
     const data = res.data
     events.value = Array.isArray(data) ? data : []
   } catch (err: any) {
@@ -38,20 +38,15 @@ async function loadEvents() {
 }
 
 onMounted(() => {
-  // 15.3: use axios to load data from the mock server and log response to console
-  axios
-    .get(API_URL)
+  EventService.getEvents()
     .then((response) => {
-      console.log('axios response.data:', response.data)
-      // also populate the UI
       events.value = Array.isArray(response.data) ? response.data : []
-      // merge any local saved events
       mergeLocalStorage()
       loading.value = false
     })
-    .catch((error) => {
-      console.error('There was an error!', error)
-      // fall back to existing loadEvents behavior
+    .catch((err) => {
+      console.error('Error loading events via EventService:', err)
+      // fallback to previous loader
       loadEvents()
     })
 })

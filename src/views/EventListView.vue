@@ -5,7 +5,7 @@ import type { Event } from '../types'
 import { ref, onMounted } from 'vue'
 
 // API endpoint: set VITE_API_URL in .env to point to your my-json-server URL
-const API_URL = import.meta.env.VITE_API_URL || 'https://my-json-server.typicode.com/your-username/your-repo/events'
+const API_URL = import.meta.env.VITE_API_URL || 'https://my-json-server.typicode.com/CC4444443/331-Lab02-Intro-to-vue/events'
 
 const events = ref<Event[]>([])
 const loading = ref(true)

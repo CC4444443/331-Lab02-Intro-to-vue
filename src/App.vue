@@ -1,24 +1,41 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import { RouterLink, RouterView } from 'vue-router'
 </script>
 
 <template>
-  <nav>
-    <a href="#">Home</a> |
-    <a href="#">About</a>
-  </nav>
-  <div class="home">
-    <HelloWorld />
+  <div id="layout">
+    <header>
+      <div class="wrapper">
+        <nav>
+          <RouterLink to="/">Home</RouterLink> |
+          <RouterLink to="/about">About</RouterLink>
+        </nav>
+      </div>
+    </header>
+
+    <RouterView />
   </div>
 </template>
 
 <style scoped>
-nav {
-  padding: 1rem;
+#layout {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
 }
+
+nav {
+  padding: 30px;
+}
+
 nav a {
-  margin: 0 0.5rem;
-  color: inherit;
-  text-decoration: none;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+nav a.router-link-exact-active {
+  color: #42b983;
 }
 </style>

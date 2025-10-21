@@ -2,11 +2,16 @@
 
 <template>
   <div class="about">
-    <h2>About</h2>
-    <p>This is the About page placeholder.</p>
+    <h1>A site for events to better the world.</h1>
   </div>
 </template>
 
 <style scoped>
-.about { padding: 2rem }
+/* @media (min-width: 1024px) {
+  .about {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+  }
+} */
 </style>

@@ -77,3 +77,49 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+/* ------------------------------------------------------------------
+   Cross-browser compatibility helpers and fallbacks
+   - Add unprefixed and vendor-prefixed properties where appropriate
+   - These are safe utility rules; apply to elements/classes as needed
+   ------------------------------------------------------------------ */
+
+html {
+  /* Prevent automatic text size adjustment on some mobile browsers */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Provide user-select with WebKit prefix for older Safari */
+:root {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+/* Example helper to apply backdrop filters with WebKit fallback for Safari */
+.backdrop {
+  /* Safari requires the -webkit- prefix for backdrop-filter */
+  -webkit-backdrop-filter: blur(8px) saturate(1.05);
+  backdrop-filter: blur(8px) saturate(1.05);
+  /* Provide a fallback background color in case backdrop-filter isn't supported */
+  background-color: rgba(255,255,255,0.6);
+}
+
+/* Example helper for using CSS filters with both prefixed and unprefixed forms */
+.with-filter {
+  -webkit-filter: blur(2px) contrast(1.02);
+  filter: blur(2px) contrast(1.02);
+}
+
+/* Example helper for image-set content: keep both prefixed and unprefixed forms.
+   Replace the URLs with real images when used. */
+/* If you use image-set for responsive images, include both -webkit-image-set and image-set
+   where you assign background-image or content; no global rule is added here. */
+
+/* forced-color-adjust: prevent Windows forced colors from recoloring critical UI.
+   Not supported in Safari; the property is ignored there which is acceptable. */
+:root {
+  forced-color-adjust: none;
+  -webkit-forced-color-adjust: none;
+}
+

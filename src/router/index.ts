@@ -5,7 +5,7 @@ import StudentsView from '../views/StudentsView.vue'
 import EventDetailView from '../views/EventDetailView.vue'
 
 const routes = [
-  { path: '/', name: 'event-list-view', component: EventListView },
+  { path: '/', name: 'event-list-view', component: EventListView, props: (route: any) => ({ page: parseInt(route.query.page?.toString() || '1') }) },
   { path: '/event/:id', name: 'event-detail-view', component: EventDetailView, props: true },
   { path: '/about', name: 'about', component: AboutView },
   { path: '/students', name: 'students', component: StudentsView },

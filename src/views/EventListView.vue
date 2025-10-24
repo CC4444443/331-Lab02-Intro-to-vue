@@ -2,7 +2,7 @@
 import EventCard from '../components/EventCard.vue'
 import EventMeta from '../components/EventMeta.vue'
 import { type Event } from '../types'
-import { ref, onMounted, computed, watchEffect } from 'vue'
+import { ref, onMounted, computed, watchEffect, withDefaults } from 'vue'
 import EventService from '../services/EventService'
 
 // API endpoint: set VITE_API_URL in .env to point to your my-json-server URL
@@ -14,13 +14,8 @@ const error = ref<string | null>(null)
 const offlineNote = ref<string | null>(null)
 const totalEvents = ref(0)
 
-const props = defineProps({
-  page: {
-    type: Number,
-    required: true,
-  },
-})
-const page = computed(() => props.page)
+const props = withDefaults(defineProps<{ page?: number }>(), { page: 1 })
+const page = computed(() => props.page as number)
 
 const hasNexPage = computed(() => {
   const totalPages = Math.ceil((totalEvents.value || 0) / 2)

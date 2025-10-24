@@ -13,7 +13,7 @@ const props = defineProps({
 const event = ref<Event | null>(null)
 
 onMounted(() => {
-  EventService.getEvent(props.id)
+  EventService.getEvent(parseInt(props.id))
     .then((response) => {
       event.value = response.data
     })

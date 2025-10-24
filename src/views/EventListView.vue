@@ -3,6 +3,7 @@ import EventCard from '../components/EventCard.vue'
 import EventMeta from '../components/EventMeta.vue'
 import { type Event } from '../types'
 import { ref, onMounted, computed, watchEffect, withDefaults } from 'vue'
+import { useRouter } from 'vue-router'
 import EventService from '../services/EventService'
 
 // API endpoint: set VITE_API_URL in .env to point to your my-json-server URL
@@ -21,6 +22,13 @@ const hasNexPage = computed(() => {
   const totalPages = Math.ceil((totalEvents.value || 0) / 2)
   return page.value < totalPages
 })
+
+const router = useRouter()
+function goToPage(newPage: number) {
+  // ensure page is at least 1
+  const p = Math.max(1, Math.floor(newPage))
+  router.push({ name: 'event-list-view', query: { page: String(p) } })
+}
 
 async function loadEvents(perPage = 2, pageNum = 1) {
   loading.value = true
@@ -153,6 +161,7 @@ function mergeLocalStorage() {
           :to="{ name: 'event-list-view', query: { page: page - 1 } }"
           rel="prev"
           v-if="page != 1"
+          @click.prevent="goToPage(page - 1)"
           >&#60; Prev Page</RouterLink
         >
 
@@ -161,6 +170,7 @@ function mergeLocalStorage() {
           :to="{ name: 'event-list-view', query: { page: page + 1 } }"
           rel="next"
           v-if="hasNexPage"
+          @click.prevent="goToPage(page + 1)"
           >Next Page &#62;</RouterLink
         >
       </div>

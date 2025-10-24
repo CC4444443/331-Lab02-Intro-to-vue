@@ -24,10 +24,16 @@ const hasNexPage = computed(() => {
 })
 
 const router = useRouter()
-function goToPage(newPage: number) {
-  // ensure page is at least 1
-  const p = Math.max(1, Math.floor(newPage))
-  router.push({ name: 'event-list-view', query: { page: String(p) } })
+async function goToPage(newPage: number) {
+  try {
+    // ensure page is at least 1
+    const p = Math.max(1, Math.floor(Number(newPage)))
+    console.log('[EventListView] goToPage ->', p)
+    await router.push({ name: 'event-list-view', query: { page: String(p) } })
+    console.log('[EventListView] router.push succeeded for page', p)
+  } catch (err) {
+    console.error('[EventListView] router.push failed', err)
+  }
 }
 
 async function loadEvents(perPage = 2, pageNum = 1) {

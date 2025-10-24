@@ -162,23 +162,9 @@ function mergeLocalStorage() {
         <button @click="addEvent" style="margin-top:0.5rem">Add event</button>
       </section>
       <div class="pagination" style="max-width:640px; margin: 1rem auto;">
-        <RouterLink
-          id="page-prev"
-          :to="{ name: 'event-list-view', query: { page: page - 1 } }"
-          rel="prev"
-          v-if="page != 1"
-          @click.prevent="goToPage(page - 1)"
-          >&#60; Prev Page</RouterLink
-        >
+        <button id="page-prev" v-if="page != 1" @click="goToPage(page - 1)" class="page-btn">&#60; Prev Page</button>
 
-        <RouterLink
-          id="page-next"
-          :to="{ name: 'event-list-view', query: { page: page + 1 } }"
-          rel="next"
-          v-if="hasNexPage"
-          @click.prevent="goToPage(page + 1)"
-          >Next Page &#62;</RouterLink
-        >
+        <button id="page-next" v-if="hasNexPage" @click="goToPage(page + 1)" class="page-btn">Next Page &#62;</button>
       </div>
     </div>
   </div>

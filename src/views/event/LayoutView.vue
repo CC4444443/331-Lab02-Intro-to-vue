@@ -13,10 +13,10 @@ const props = defineProps({
 
 onMounted(() => {
   EventService.getEvent(parseInt(props.id))
-    .then((response) => {
+    .then((response: any) => {
       event.value = response.data
     })
-    .catch((error) => {
+    .catch((error: any) => {
       console.error('There was an error!', error)
     })
 })

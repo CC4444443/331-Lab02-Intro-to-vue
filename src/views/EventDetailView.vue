@@ -2,6 +2,8 @@
 import { ref, onMounted, defineProps } from 'vue'
 import type { Event } from '../types'
 import EventService from '../services/EventService'
+import { useMessageStore } from '../stores/message'
+import { storeToRefs } from 'pinia'
 
 const props = defineProps({
   id: {
@@ -11,6 +13,8 @@ const props = defineProps({
 })
 
 const event = ref<Event | null>(null)
+const messageStore = useMessageStore()
+const { message } = storeToRefs(messageStore)
 
 onMounted(() => {
   EventService.getEvent(parseInt(props.id))
@@ -25,6 +29,9 @@ onMounted(() => {
 
 <template>
   <div v-if="event">
+    <div v-if="message" class="flash-inside">
+      <strong>{{ message }}</strong>
+    </div>
     <h1>{{ event.title }}</h1>
     <p>{{ event.time }} on {{ event.date }} @ {{ event.location }}</p>
     <p>{{ event.description }}</p>
@@ -34,4 +41,5 @@ onMounted(() => {
 <style scoped>
 /* simple styling */
 div { padding: 1rem }
+.flash-inside { background: #fff3b0; padding: 0.5rem; border-radius: 4px; margin-bottom: 0.75rem }
 </style>

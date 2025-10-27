@@ -114,7 +114,21 @@ html {
 /* Example helper for image-set content: keep both prefixed and unprefixed forms.
    Replace the URLs with real images when used. */
 /* If you use image-set for responsive images, include both -webkit-image-set and image-set
-   where you assign background-image or content; no global rule is added here. */
+  where you assign background-image or content. Add both forms when setting background-image
+  or content to reduce console warnings in some browsers. Example:
+
+  .icon { 
+    background-image: -webkit-image-set(url('/img/icon@1x.png') 1x, url('/img/icon@2x.png') 2x);
+    background-image: image-set(url('/img/icon@1x.png') 1x, url('/img/icon@2x.png') 2x);
+  }
+
+  For CSS content with image-set use the same pattern:
+
+  .icon::before {
+    content: -webkit-image-set(url('/img/sg1.png') 1x, url('/img/sg2.png') 2x);
+    content: image-set(url('/img/sg1.png') 1x, url('/img/sg2.png') 2x);
+  }
+*/
 
 /* forced-color-adjust: prevent Windows forced colors from recoloring critical UI.
    Not supported in Safari; the property is ignored there which is acceptable. */

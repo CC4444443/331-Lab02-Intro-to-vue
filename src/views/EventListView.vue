@@ -19,7 +19,7 @@ const props = withDefaults(defineProps<{ page?: number }>(), { page: 1 })
 const page = computed(() => props.page as number)
 
 const hasNexPage = computed(() => {
-  const totalPages = Math.ceil((totalEvents.value || 0) / 2)
+  const totalPages = Math.ceil((totalEvents.value || 0) / 3)
   return page.value < totalPages
 })
 
@@ -63,9 +63,8 @@ async function loadEvents(perPage = 2, pageNum = 1) {
 
 onMounted(() => {
   watchEffect(() => {
-    events.value = null
     loading.value = true
-    EventService.getEvents(2, page.value)
+    EventService.getEvents(3, page.value)
       .then((response) => {
         events.value = Array.isArray(response.data) ? response.data : []
         totalEvents.value = Number(response.headers['x-total-count'] ?? response.headers['X-Total-Count'] ?? 0)

@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+h1 {
+  @apply text-4xl mb-8;
+}
+
 /* Project custom styles (moved from src/style.css) */
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;

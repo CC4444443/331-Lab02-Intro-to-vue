@@ -1,15 +1,23 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import { ref } from 'vue'
+
+// flash message example (empty by default)
+const message = ref('')
 </script>
 
 <template>
   <div id="layout">
     <header>
+      <div id="flashMessage" class="animate-fade" v-if="message">
+        <h4>{{ message }}</h4>
+      </div>
+      <h1>Deploy with Vercel</h1>
       <div class="wrapper">
-        <nav>
-          <RouterLink :to="{ name: 'event-list-view' }">Event</RouterLink> |
-          <RouterLink :to="{ name: 'students' }">Students</RouterLink> |
-          <RouterLink :to="{ name: 'about' }">About</RouterLink>
+        <nav class="py-6">
+          <RouterLink class="font-bold text-gray-700" exact-active-class="text-green-500" :to="{ name: 'event-list-view' }">Event</RouterLink> |
+          <RouterLink class="font-bold text-gray-700" exact-active-class="text-green-500" :to="{ name: 'students' }">Students</RouterLink> |
+          <RouterLink class="font-bold text-gray-700" exact-active-class="text-green-500" :to="{ name: 'about' }">About</RouterLink>
         </nav>
       </div>
     </header>
@@ -27,17 +35,11 @@ import { RouterLink, RouterView } from 'vue-router'
   color: #2c3e50;
 }
 
+/* Nav link styling is applied via Tailwind utility classes on the RouterLink components.
+   Removed the old .router-link-exact-active CSS in favor of Vue's exact-active-class attribute.
+*/
 nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
+  /* kept intentionally minimal; per-link classes handle styling */
 }
 
 h2 {

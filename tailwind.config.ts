@@ -12,6 +12,19 @@ export default {
       scale: {
         '101': '1.01',
       },
+      fontFamily: {
+        sans: ['Avenir', 'Helvetica', 'Arial', 'sans-serif'],
+      },
+      // this is animation class
+      animation: {
+        fade: 'yellowFade 3s ease-in-out',
+      },
+      keyframes: {
+        yellowFade: {
+          '0%': { backgroundColor: 'yellow' },
+          '100%': { backgroundColor: 'transparent' },
+        },
+      },
     },
   },
   plugins: [],

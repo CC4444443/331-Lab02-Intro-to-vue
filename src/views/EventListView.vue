@@ -132,21 +132,21 @@ function mergeLocalStorage() {
 </script>
 
 <template>
-  <h1>Events For Good</h1>
+  <h1 class="text-3xl font-bold mb-4">Events For Good</h1>
   <!-- new element -->
   <div>
-    <button @click="loadEvents(2, page)" style="margin-bottom: 1rem">Reload events</button>
-    <div v-if="loading">Loading events...</div>
-    <div v-else-if="error">Failed to load events: {{ error }}</div>
+    <button @click="loadEvents(2, page)" class="mb-4 px-4 py-2 rounded border bg-gray-100">Reload events</button>
+    <div v-if="loading" class="mb-4">Loading events...</div>
+    <div v-else-if="error" class="mb-4 text-red-600">Failed to load events: {{ error }}</div>
     <div v-else>
-      <div class="events">
-        <div v-for="event in events" :key="event.id" class="event-row">
+      <div class="flex flex-col items-center p-8">
+        <div v-for="event in events" :key="event.id" class="event-row w-full max-w-3xl">
           <EventCard :event="event" />
           <EventMeta :event="event" />
         </div>
       </div>
 
-  <section style="margin-top: 2rem; text-align:left; max-width:640px; margin-left:auto; margin-right:auto;">
+      <section style="margin-top: 2rem; text-align:left; max-width:640px; margin-left:auto; margin-right:auto;">
         <h3>Add a new event (demo)</h3>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem;">
           <input v-model="newEvent.title" placeholder="Title" />
@@ -158,11 +158,10 @@ function mergeLocalStorage() {
           <input v-model="newEvent.description" placeholder="Description" style="grid-column:1 / -1" />
           <label style="grid-column:1 / -1"><input type="checkbox" v-model="newEvent.petsAllowed" /> Pets allowed</label>
         </div>
-        <button @click="addEvent" style="margin-top:0.5rem">Add event</button>
+        <button @click="addEvent" class="mt-2 px-3 py-1 rounded bg-blue-500 text-white">Add event</button>
       </section>
-      <div class="pagination" style="max-width:640px; margin: 1rem auto;">
+  <div class="pagination max-w-2xl mx-auto my-4 flex justify-between">
         <button id="page-prev" v-if="page != 1" @click="goToPage(page - 1)" class="page-btn">&#60; Prev Page</button>
-
         <button id="page-next" v-if="hasNexPage" @click="goToPage(page + 1)" class="page-btn">Next Page &#62;</button>
       </div>
     </div>
@@ -170,12 +169,6 @@ function mergeLocalStorage() {
 </template>
 
 <style scoped>
-.events {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2rem;
-}
 .event-row {
   display: flex;
   align-items: center;

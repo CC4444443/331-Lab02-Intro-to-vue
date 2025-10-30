@@ -9,7 +9,7 @@ defineProps<{
 
 <template>
   <RouterLink class="event-link" :to="{ name: 'event-detail-view', params: { id: event.id } }">
-    <div class="event-card">
+    <div class="cursor-pointer border border-gray-600 p-4 w-64 mb-6 hover:scale-101 hover:shadow-sp">
       <h2>{{ event.title }}</h2>
       <span>@{{ event.time }} on {{ event.date }}</span>
     </div>
@@ -17,19 +17,10 @@ defineProps<{
 </template>
 
 <style scoped>
-.event-card {
-  padding: 20px;
-  width: 250px;
-  cursor: pointer;
-  border: 1px solid #39495c;
-  margin-bottom: 18px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.event-card:hover {
-  transform: scale(1.01);
-  box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.2);
-}
+/* Original .event-card styles removed in favor of Tailwind utility classes:
+   cursor-pointer border border-gray-600 p-4 w-64 mb-6 hover:scale-101 hover:shadow-sp
+   The hover rules are implemented with Tailwind's hover: variant and custom utilities.
+*/
 
 .event-link {
   text-decoration: none;

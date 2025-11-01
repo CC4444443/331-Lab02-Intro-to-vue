@@ -1,19 +1,7 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import { ref } from 'vue'
-// SpeedInsights component (optional: requires @vercel/speed-insights)
-// The package may expose a Vue integration; if not installed the import can be removed.
-let SpeedInsights: any = null
-try {
-  // dynamic import avoids build-time failure if package not present locally
-  // Vite will still include this if the package is installed
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  // @ts-ignore
-  SpeedInsights = require('@vercel/speed-insights/vue').default || require('@vercel/speed-insights').SpeedInsights
-} catch (e) {
-  // package not installed locally — it's optional for demo on Vercel
-  SpeedInsights = null
-}
+import { SpeedInsights } from '@vercel/speed-insights/vue'
 
 // flash message example (empty by default)
 const message = ref('')
@@ -22,8 +10,8 @@ const message = ref('')
 <template>
   <div id="layout">
     <header>
-      <!-- SpeedInsights component (renders Vercel speed insights UI when available) -->
-      <component v-if="SpeedInsights" :is="SpeedInsights" />
+      <!-- Vercel Speed Insights component -->
+      <SpeedInsights />
 
       <div id="flashMessage" class="animate-fade" v-if="message">
         <h4>{{ message }}</h4>
